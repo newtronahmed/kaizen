@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Invoice;
 use App\Models\Product;
+use App\Models\Vendor;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

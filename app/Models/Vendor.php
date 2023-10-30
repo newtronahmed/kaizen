@@ -18,4 +18,11 @@ class Vendor extends Model
         'postcode',
         'country',
     ];
+
+    public function purchase_order(){
+        return $this->hasMany(PurchaseOrder::class);
+    }
+    public function product(){
+        return $this->hasMany(Product::class);
+    }
 }

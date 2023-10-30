@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Supplier;
+use App\Models\Product;
+use App\Models\PurchaseOrder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class SupplierSeeder extends Seeder
+class PurchaseOrderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +16,6 @@ class SupplierSeeder extends Seeder
      */
     public function run()
     {
-        Supplier::factory()->count(15)->create();
+        PurchaseOrder::factory()->count(20)->hasAttached(Product::factory()->count(4), ["quantity"=>rand(1, 100)])->create();
     }
 }

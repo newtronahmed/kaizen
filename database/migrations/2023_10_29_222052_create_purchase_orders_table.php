@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('payment_terms', ['net_30', 'pay_on_delivery']);
             $table->date('due_date');
             $table->enum('status', ['pending', 'approved', 'in_transit', 'delivered']);
-            $table->enum('payment_status', ['unpaid', 'paid'])->default('pending');
+            $table->enum('payment_status', ['unpaid', 'paid'])->default('unpaid');
             $table->text('note')->nullable();
             $table->timestamps();
         });
