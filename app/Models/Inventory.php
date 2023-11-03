@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Inventory extends Model
 {
     use HasFactory;
-    public function product(){
+    public function product()
+    {
         return $this->hasOne(Product::class);
     }
+
+   
 }

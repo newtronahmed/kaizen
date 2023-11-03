@@ -13,7 +13,7 @@ class StoreInvoiceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class StoreInvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'customer_id' => 'required|string',
+            'total_amount' => 'required|numeric',
+            //todo: date should be after more than today
+            'payment_due' => 'required|date',
+            'subtotal_amount' => 'nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'tax' => 'nullable|numeric',
+            'currency' => 'nullable|string',
+            'status' => 'nullable'
         ];
     }
 }

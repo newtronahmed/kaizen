@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->integer('quantity');
-            $table->integer('minimum_stock_level');
-            $table->integer('maximum_stock_level');
+            $table->integer('minimum_stock_level')->nullable();
+            $table->integer('maximum_stock_level')->nullable();
 
             $table->timestamps();
         });

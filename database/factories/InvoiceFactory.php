@@ -22,7 +22,7 @@ class InvoiceFactory extends Factory
         $total_amount = $subtotal_amount + rand(1, 10);
         $payment_due = now()->addMonth();
         return [
-            'invoice_number'=>Hash::make('random'),
+            'invoice_number'=>generateIdentifier("INV"),
             'customer_id' => Customer::factory(),
             'total_amount' =>$total_amount,
             'subtotal_amount' => $subtotal_amount,

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('manufacturer')->nullable();
             $table->string('product_type')->nullable();
             $table->decimal('cost_price', 10, 2);
-            $table->boolean('returnable')->nullable();
+            $table->boolean('returnable')->nullable()->default(false);
             $table->unsignedBigInteger('brand_id')->nullable();
             // $table->string('images')
             // $table->integer('stock_quantity');
