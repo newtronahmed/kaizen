@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class StoreCustomerRequest extends FormRequest
 {
@@ -24,17 +27,21 @@ class StoreCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'email_addres' => ['required', 'string', 'email', 'unique:customers'],
-            'name' => ['string',],
-            'phone' => ['required'],
-            'address' => ['required'],
-            'city' => ['required'],
-            'postcode' => ['required',],
-            'country' => [],
-            'avatar' => [],
-            'website' => [],
-            'company_name' => []
+            'email_address' => ['required', 'string', 'unique:customers'],
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'avatar' => 'nullable|url',
+            'website' => 'nullable|url',
+            'address' => 'required|string',
+            'city' => 'required|string|max:255',
+            'postcode' => 'required|string|max:20',
+            'country' => 'required|string|max:255',
+            'company_name' => 'nullable|string|max:255',
 
         ];
     }
+
+    public function failedValidation(Validator $validator) {
+        throw new ValidationException($validator); 
+      }
 }

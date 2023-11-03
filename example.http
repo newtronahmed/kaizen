@@ -1,0 +1,11 @@
+POST http://localhost:8000/api/customer
+
+{
+    "email_address": "exampgle@gmail.com",
+    "name":"example",
+    "phone": "233247768739",
+    "address":"kasoa estate",
+    "city": "kasoa",
+    "postcode":"233",
+    "country": "Ghana"
+}

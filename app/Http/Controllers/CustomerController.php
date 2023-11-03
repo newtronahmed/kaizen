@@ -15,7 +15,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::all();
+        return response()->json(["message" => "success", "customers" => $customers]);
     }
 
     /**
@@ -27,7 +28,7 @@ class CustomerController extends Controller
     public function store(StoreCustomerRequest $request)
     {
         Customer::create($request->all());
-        return response()->json(['message'=>'success',], 200);
+        return response()->json(['message' => 'success',])->status(201);
     }
 
     /**
@@ -38,7 +39,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        
+        return response()->json(["customer" => $customer]);
     }
 
     /**
@@ -50,7 +51,9 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        //
+        $customer->update($request->all());
+        $customer->save();
+        return response()->json(["message" => "success", "customer" => $customer]);
     }
 
     /**
@@ -61,6 +64,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+        return response()->json(["message" => "success"]);
     }
 }

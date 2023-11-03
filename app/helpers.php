@@ -1,4 +1,6 @@
-function generateIdentifier($initials) {
+<?php
+function generateIdentifier($initials)
+{
     // Get the current year and month
     $year = date('Y');
     $month = date('m');

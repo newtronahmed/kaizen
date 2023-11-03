@@ -34,10 +34,10 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 //     'discount' => DiscountController::class,
 // ]);
 
-Route::resource('customer', CustomerController::class);
-Route::resource('inventory', InventoryController::class);
-Route::resource('receipt', ReceiptController::class);
-Route::resource('supplier', SupplierController::class);
-Route::resource('invoice', InvoiceController::class);
-Route::resource('discount', DiscountController::class);
+Route::resource('customers', CustomerController::class);
+Route::resource('inventories', InventoryController::class);
+Route::resource('receipts', ReceiptController::class);
+Route::resource('vendors', SupplierController::class);
+Route::resource('invoices', InvoiceController::class);
+Route::resource('discounts', DiscountController::class);
 
