@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     public function invoices()
     {
         return $this->belongsToMany(Invoice::class)->withPivot('quantity', 'unit_price')->withTimestamps();
     }
     public function inventory()
     {
-        return $this->belongsTo(Invoice::class);
+        return $this->hasOne(Inventory::class);
     }
     public function brand()
     {
@@ -28,19 +29,9 @@ class Product extends Model
     {
         return $this->belongsTo(Vendor::class);
     }
+    public function category() {
+        return $this->hasOne(Category::class);
+    }
 
-    public function decreaseQuantity($quantity)
-    {
-        if ($this->quantity >= $quantity) {
-            $this->quantity -= $quantity;
-            $this->save();
-            return true; // Quantity was successfully decreased.
-        }
-        return false; // Quantity is insufficient to deduct.
-    }
-    public function increaseQuantity($quantity)
-    {
-        $this->quantity += $quantity;
-        $this->save();
-    }
+    
 }

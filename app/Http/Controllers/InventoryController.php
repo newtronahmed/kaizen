@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Inventory;
 use App\Http\Requests\StoreInventoryRequest;
 use App\Http\Requests\UpdateInventoryRequest;
+use App\Traits\HttpResponseTrait;
+use Exception;
 
 class InventoryController extends Controller
 {
+    use HttpResponseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +18,12 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $inventories = Inventory::all();
+            return $this->success("success", $inventories);
+        } catch (Exception $exception) {
+            return $this->badRequest($exception->getMessage());
+        }
     }
 
     /**
@@ -37,7 +45,11 @@ class InventoryController extends Controller
      */
     public function show(Inventory $inventory)
     {
-        //
+        try {
+            return $this->success("Success", $inventory);
+        } catch (Exception $e) {
+            $this->badRequest($e->getMessage());
+        }
     }
 
     /**
@@ -49,7 +61,14 @@ class InventoryController extends Controller
      */
     public function update(UpdateInventoryRequest $request, Inventory $inventory)
     {
-        //
+        try {
+           $inventory->update($request->all());
+           $inventory->save();
+            $this->success('successfully updated', $inventory);
+            //code...
+        } catch (Exception $e) {
+            $this->badRequest($e->getMessage());
+        }
     }
 
     /**

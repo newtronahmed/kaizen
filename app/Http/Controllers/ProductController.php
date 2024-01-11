@@ -45,21 +45,30 @@ class ProductController extends Controller
      * @param  \App\Http\Requests\StoreProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request, ProductService $productService)
     {
         try {
-            $product = Product::create($request->validated());
-            if ($product->inventory()->exists()) {
-                $this->badRequest('Inventory already created');
+            // $product = Product::create($request->validated());
+            // // $productService->
+            // if ($product->inventory()->exists()) {
+            //     $this->badRequest('Inventory already created');
+            // }
+            // $product->inventory()->create([
+            //     'quantity' => $request->only('initial_quantity'),
+            //     'minimum_stock_level' => $request->only('minimum_stock_level'),
+            //     'maximum_stock_level' => $request->only('maximum_stock_level'),
+            // ]);
+            $data = $productService->createProduct($request);
+            if (isset($data["error"])){
+                $e = $data["error"];
+                return $this->serverError('Something went wrong while creating product product- '.$e->getMessage());
             }
-            $product->inventory()->create([
-                'quantity' => $request->only('initial_quantity'),
-                'minimum_stock_level' => $request->only('minimum_stock_level'),
-                'maximum_stock_level' => $request->only('maximum_stock_level'),
-            ]);
             //associat to inventory and set attributes
             //associate to brand
-            return $this->success("success", $product);
+            if (isset($data["data"])){
+                return $this->success('success', $data["data"]);
+            }
+            return $this->success("success", $data);
         } catch (Exception $exception) {
             return $this->badRequest($exception->getMessage());
         }

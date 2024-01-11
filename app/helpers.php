@@ -13,3 +13,6 @@ function generateIdentifier($initials)
 
     return $identifier;
 }
+function generateInvoiceIdentifier(){
+    return generateIdentifier("INV");
+}

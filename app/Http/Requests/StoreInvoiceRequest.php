@@ -31,8 +31,13 @@ class StoreInvoiceRequest extends FormRequest
             'subtotal_amount' => 'nullable|numeric',
             'discount' => 'nullable|numeric',
             'tax' => 'nullable|numeric',
-            'currency' => 'nullable|string',
-            'status' => 'nullable'
+            'currency' => 'required|string',
+            'status' => 'nullable',
+            'products' => 'required|array',
+            'products.*.product_id'=> 'required|numeric',
+            'products.*.quantity' => 'numeric|required',
+            'products.*.unit_price' =>'numeric|required'
+
         ];
     }
 }

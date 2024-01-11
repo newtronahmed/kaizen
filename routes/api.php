@@ -4,8 +4,9 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReceiptController;
-use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\VendorController;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::resource('customers', CustomerController::class);
 Route::resource('inventories', InventoryController::class);
 Route::resource('receipts', ReceiptController::class);
-Route::resource('vendors', SupplierController::class);
+Route::resource('vendors', VendorController::class);
 Route::resource('invoices', InvoiceController::class);
 Route::resource('discounts', DiscountController::class);
+Route::resource('products', ProductController::class);
 

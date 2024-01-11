@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Traits\HttpResponseTrait;
+use Exception;
 
 class CustomerController extends Controller
 {
+    use HttpResponseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -27,8 +30,14 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        Customer::create($request->all());
-        return response()->json(['message' => 'success',])->status(201);
+        try {
+            Customer::create($request->all());
+            return $this->success('Successfully created customer');
+            //code...
+        } catch (Exception $e) {
+            //throw $th;
+            $this->serverError('Error occured');
+        }
     }
 
     /**
@@ -51,9 +60,13 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        $customer->update($request->all());
-        $customer->save();
-        return response()->json(["message" => "success", "customer" => $customer]);
+        try {
+            $customer->update($request->all());
+            $customer->save();
+            return response()->json(["message" => "success", "customer" => $customer]);
+        } catch (Exception $e) {
+            return $this->badRequest("Something went wrong while updating customer");
+        }
     }
 
     /**

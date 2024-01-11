@@ -8,17 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
-    public function products () {
-        return $this->belongsToMany(Product::class)->withPivot('quantity','unit_price')->withTimestamps();
+    protected $guarded = [];
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withPivot('quantity', 'unit_price')->withTimestamps();
     }
-    
-    public function customer () {
+
+    public function customer()
+    {
         return $this->belongsTo(Customer::class);
     }
-    public function receipts () {
+    public function receipts()
+    {
         return $this->hasMany(Receipt::class);
     }
-    public function payments() {
+    public function payments()
+    {
         return $this->hasMany(Payment::class);
     }
 }
