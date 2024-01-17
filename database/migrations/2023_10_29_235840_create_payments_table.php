@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('invoice_id');
             $table->enum('payment_method',['cash', 'momo', 'online']);
-            $table->decimal('remaining_balance', 10, 2);
             $table->date('payment_date')->default(now());
             $table->decimal('amount', 10, 2);
             // $table->string('')

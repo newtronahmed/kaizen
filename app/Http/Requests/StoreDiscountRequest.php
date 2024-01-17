@@ -13,7 +13,7 @@ class StoreDiscountRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class StoreDiscountRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=> 'required|string',
+            'amount'=>'required|numeric',
+            'type'=>'required|string',
+            'expiry_date'=>'required|date'
         ];
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\VendorController;
@@ -42,4 +43,5 @@ Route::resource('vendors', VendorController::class);
 Route::resource('invoices', InvoiceController::class);
 Route::resource('discounts', DiscountController::class);
 Route::resource('products', ProductController::class);
+Route::resource('payments', PaymentController::class);
 

@@ -61,13 +61,14 @@ class InventoryController extends Controller
      */
     public function update(UpdateInventoryRequest $request, Inventory $inventory)
     {
+    
         try {
            $inventory->update($request->all());
            $inventory->save();
-            $this->success('successfully updated', $inventory);
+            return $this->success('successfully updated', $inventory);
             //code...
         } catch (Exception $e) {
-            $this->badRequest($e->getMessage());
+           return $this->badRequest($e->getMessage());
         }
     }
 

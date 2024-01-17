@@ -25,6 +25,7 @@ class InvoiceFactory extends Factory
             'invoice_number'=>generateIdentifier("INV"),
             'customer_id' => Customer::factory(),
             'total_amount' =>$total_amount,
+            'remaining_balance' => $total_amount,
             'subtotal_amount' => $subtotal_amount,
             'payment_due'=> now()->addMonth(),
             'note' => 'Your payment is due '. $payment_due->format('Y-m-d'),

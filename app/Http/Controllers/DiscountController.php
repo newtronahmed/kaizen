@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Discount;
 use App\Http\Requests\StoreDiscountRequest;
 use App\Http\Requests\UpdateDiscountRequest;
+use App\Traits\HttpResponseTrait;
+use Exception;
 
 class DiscountController extends Controller
 {
+    use HttpResponseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +18,12 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $discounts = Discount::all();
+            return $this->success('', $discounts);
+        } catch (Exception $e) {
+           return $this->serverError('Something went wrong while fetching discount');
+        }
     }
 
     /**
@@ -26,7 +34,12 @@ class DiscountController extends Controller
      */
     public function store(StoreDiscountRequest $request)
     {
-        //
+        try {
+            $discount = Discount::create($request->validated());
+            return $this->success('', $discount);
+        } catch (Exception $e) {
+            return $this->serverError("Something went wrong while creating {$e->getMessage()}");
+        }
     }
 
     /**
@@ -37,7 +50,11 @@ class DiscountController extends Controller
      */
     public function show(Discount $discount)
     {
-        //
+        try {
+           return $this->success('', $discount);
+        } catch (Exception $e) {
+            return $this->serverError("Something went wrong while fetching discount {$e->getMessage()}");
+        }
     }
 
     /**
@@ -60,6 +77,11 @@ class DiscountController extends Controller
      */
     public function destroy(Discount $discount)
     {
-        //
+        try {
+            $discount->delete();
+            return $this->success('');
+        } catch (Exception $e) {
+            return $this->serverError();
+        }
     }
 }

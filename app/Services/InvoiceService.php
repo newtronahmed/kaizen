@@ -58,13 +58,15 @@ class InvoiceService
 
         try {
             // $validatedData = $request->validated();
+            //if request has discount init, fetch discount
+            //if reques 
             $invoice = null;
 
             // dd($validatedData);
             // dd(Invoice::create([]));
-            DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request, $invoice) {
                 $invoice = Invoice::create([
-                    'invoice_number' => generateIdentifier("INV"),
+                    'invoice_number' => generateInvoiceIdentifier(),
                     'customer_id' => $request->input('customer_id'),
                     'total_amount' => $request->input('total_amount'),
                     'payment_due' => $request->input('payment_due'),
@@ -73,21 +75,9 @@ class InvoiceService
                     'tax' => $request->input('tax'),
                     'note' => $request->input('note'),
                     'currency' => $request->input('currency'),
-                    'status' => $request->input('status')
+                    'remaining_balance' => $request->input('total_amount')
                 ]);
                 // dd($invoice->invoice_number);
-                // $invoice = new Invoice();
-                // $invoice->invoice_number = generateIdentifier("INV");
-                // $invoice->customer_id = $validatedData["customer_id"];
-                // $invoice->total_amount = $validatedData["total_amount"];
-                // $invoice->payment_due = $validatedData["payment_due"];
-                // $invoice->subtotal_amount = $validatedData["subtotal_amount"];
-                // $invoice->discount = $validatedData["discount"];
-                // $invoice->tax = $validatedData["tax"];
-                // $invoice->note = $validatedData["note"];
-                // $invoice->currency = $validatedData["currency"];
-                // $invoice->status = $validatedData["status"];
-                // $invoice->save();
                 foreach ($request->input('products') as $productData) {
 
                     // $product = $invoice->products()->find($productData['product_id']);
@@ -101,18 +91,18 @@ class InvoiceService
                         'unit_price' => $productData['unit_price']
                     ]);
 
-                    if (!$product->inventory->decreaseQuantity($productData['quantity'])){
-                        DB::rollBack();
+                    if (!$product->inventory->decreaseQuantity($productData['quantity'])) {
+                      DB::rollBack();
                         throw new Exception("Product {$product->name}  is out of stock");
                     }
                 }
-                if ($invoice){
-                     return [
-                        "data" => $invoice
-                    ];
-                }
+                DB::commit();
             });
-            DB::commit();
+            if ($invoice) {
+                return [
+                    "data" => $invoice
+                ];
+            }
         } catch (Exception $e) {
             DB::rollBack();
             // what to return here

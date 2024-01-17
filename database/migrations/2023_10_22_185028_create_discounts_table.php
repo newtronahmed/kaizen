@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('amount', 10, 2);
             $table->enum('type', ['fixed', 'percentage']);
             $table->string('code');
+            $table->date('start_date');
             $table->date('expiry_date');
             $table->timestamps();
         });
