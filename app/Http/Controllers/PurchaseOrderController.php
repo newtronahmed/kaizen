@@ -48,6 +48,7 @@ class PurchaseOrderController extends Controller
                 $order->products()->attach($product, ['quantity' => $item['quantity']]);
 
             }
+            return $this->success('Successfully placed order', $order);
         } catch (Exception $e) {
             if($e instanceof ProductNotFoundException){
                 return $this->notFound("Product with id of {$e->getProductId()} not found");
@@ -62,9 +63,13 @@ class PurchaseOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(PurchaseOrder $order)
     {
-        //
+        try {
+            return $this->success("success",$order );
+        } catch (Exception $exception) {
+            return $this->badRequest($exception->getMessage());
+        }
     }
 
     /**
@@ -85,8 +90,13 @@ class PurchaseOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(PurchaseOrder $order)
     {
-        //
+        try {
+            $order->delete();
+            return $this->success("successfully deleted order" );
+        } catch (Exception $exception) {
+            return $this->badRequest($exception->getMessage());
+        }
     }
 }
